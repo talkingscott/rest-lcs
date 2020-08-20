@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +44,12 @@ public class LCSController {
 		}
 		final String lcs = lcsService.calculateLCS(setOfValues);
 		return new LCSResponse(lcs);
+	}
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public @ResponseBody String handleException(HttpMessageNotReadableException e) {
+	    return "The request must be well-formed JSON";
 	}
 
 	@ExceptionHandler(NullPointerException.class)
