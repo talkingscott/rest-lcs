@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<title>Simple rest-lcs test</title>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1>Simple rest-lcs test</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<form class="form-inline">
+					<label for="strings">Enter Comma-Separated Strings</label>
+					<input id="strings" class="form-control mt-2 mb-2 ml-2" style="width: 500px;" type="text" placeholder="one,two,three,four">
+					<button id="calculate" type="button" class="btn btn-primary form-control mt-2 mb-2 ml-2">Calculate</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h4>Request</h4>
+			</div>
+			<div class="col">
+				<h4>Response</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col border bg-light">
+				<pre id="request">&#160;</pre>
+			</div>
+			<div class="col border bg-light">
+				<pre id="response">&#160;</pre>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    	$(function() {
+			$("#calculate").click(function() {
+				let strings = $("#strings").val().split(/\s*,\s*/);
+				let request = {
+					setOfStrings: strings.map(s => {return {value: s};})
+				};
+				let request_json = JSON.stringify(request, null, 4);
+				$("#request").text(request_json);
+				let url = window.location.origin + "/lcs";
+				$.ajax({
+					method: "POST",
+				    contentType: "application/json; charset=utf-8",
+					data: request_json,
+					url: url,
+					success: function (data) {
+						$("#response").text(JSON.stringify(data, null, 4));
+					},
+					error: function (jqxhr, textStatus, errorThrown) {
+						$("#response").text(`${textStatus}\n${errorThrown}\n${jqxhr.responseText}`);
+					}
+				});
+			});
+    	});
+    </script>
+</body>
+</html>

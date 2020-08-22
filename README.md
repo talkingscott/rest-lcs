@@ -45,10 +45,14 @@ There are three forms of testing provided.
 
 ### Python Script
 
-The python script requires the `requests` package, which you can install with pip.  It will implicitly run the executable `python3` from your path if you run it directly.  Explicitly specify the executable if you want a different python.
+The python script requires the `requests` package, which you can install with `pip`.  It will implicitly run the executable `python` from your path if you run it directly.  Explicitly specify the executable if you want a different python, e.g. `/usr/local/bin/python3 test-client.py`.
 
 The script runs a fixed set of tests against http://localhost:8080/lcs.  You must have the app running on the local machine for the tests to work.
 
 ### Web Page
 
 Start the app, then point a browser at [http://localhost:8080/](http://localhost:8080/).  Enter the strings you want to calculate the LCS of, separated by commas, then click the *Calculate* button.  The request and response JSON will be displayed.
+
+## Don't Have Java?
+
+There is a python version of the web app in the `python_server` directory.  It requires the `bottle` package, which can be installed with `pip`.  Like the Java version, it listens on port 8080, comes with the test web page, and works with the python test client.  However, there are no unit tests.
